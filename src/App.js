@@ -10,8 +10,8 @@ import { Component } from 'react';
 class App extends Component {
   state = {
     items: [
-      { id: 1, title: "wake up" }, 
-      { id: 2, title: "make breakfast" },
+      // { id: 1, title: "wake up" }, 
+      // { id: 2, title: "make breakfast" },
     ],
     id: uuidv4(),
     item: '',
@@ -42,9 +42,25 @@ class App extends Component {
     });
   }
 
-  clearList = () => { console.log('clear list') }
-  handleDelete = (id) => { console.log(`handle edit ${id}`) }
-  handleEdit = (id) => { console.log(`handle edit ${id}`) }
+  clearList = () => { this.setState({
+    items: []
+  }); }
+  handleDelete = (id) => { 
+    const filteredItems = this.state.items.filter(item => item.id !== id);
+    this.setState({
+      items: filteredItems
+    });
+   }
+  handleEdit = (id) => { 
+    const filteredItems = this.state.items.filter(item => item.id !== id);
+    const selectedItem = this.state.items.find(item => item.id === id);
+    this.setState({
+      items: filteredItems,
+      item: selectedItem.title,
+      id: id,
+      editItem: true,
+    });
+   }
 
   render() {
 
